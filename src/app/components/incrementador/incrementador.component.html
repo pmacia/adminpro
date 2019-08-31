@@ -1,0 +1,30 @@
+<h5 class="card-title"> {{ leyenda }} - {{ progreso }} </h5>
+
+<div class="input-group mb-3">
+        <div class="input-group-prepend" id="button-addon1">
+          <button class="btn btn-outline-primary" type="button" (click)="cambiarValor(-5)">
+              <i class="mdi mdi-minus"></i>
+          </button>
+        </div>
+
+        <input 
+            type="number" 
+            class="form-control" 
+            #txtProgress
+            placeholder="" 
+            aria-label="Progress input example" 
+            aria-describedby="button-addon2" 
+            name="progreso" 
+            (ngModelChange)="onChange($event)" 
+            [(ngModel)]="progreso" 
+            min="0" 
+            max="100"
+       >
+        
+        <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" (click)="cambiarValor(5)" id="button-addon3">
+                        <i class="mdi mdi-plus"></i>
+                </button>
+        </div>
+</div>
+
