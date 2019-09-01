@@ -2,4 +2,10 @@
 
 /* Importamos los estilos para las plantillas utilizadas en el proyecto AdminPro */
 @import "assets/css/style.css";
-@import "assets/css/colors/default-dark.css";
+/* Movemos los estilos de colores al index.html para poder modificarlos dinámicamente */
+/* @import "assets/css/colors/default-dark.css"; */
+
+
+#themecolors a {
+    cursor: pointer;
+}
