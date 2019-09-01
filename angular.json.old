@@ -23,13 +23,14 @@
               "src/assets"
             ],
             "styles": [ 
-              "src/assets/plugins/bootstrap/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/plugins/jquery/jquery.min.js",
-              "src/assets/plugins/bootstrap/js/popper.min.js",
-              "src/assets/plugins/bootstrap/js/bootstrap.min.js",
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
               "src/assets/js/perfect-scrollbar.jquery.min.js",
               "src/assets/js/waves.js",
               "src/assets/js/sidebarmenu.js",
