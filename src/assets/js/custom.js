@@ -5,6 +5,9 @@ Email: niravjoshi87@gmail.com
 File: js
 */
 
+/*
+    Modificado por Paco Maciá para poder controlar la carga del script
+*/
 
 function inicializarPlugins() {
 
