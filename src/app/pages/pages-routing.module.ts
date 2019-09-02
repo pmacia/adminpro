@@ -19,8 +19,8 @@ const routes: Routes = [
       { path: 'progress', component: ProgressComponent, data: { titulo: 'Progreso' } },
       { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
       { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
-      { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
-      { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Setting' } },
+      { path: 'observables', component: RxjsComponent, data: { titulo: 'Observables' } },
+      { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' } },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   },
