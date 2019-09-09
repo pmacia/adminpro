@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from '../services/service.index';
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public router: Router,
+    private ngZone: NgZone,
     public usuarioService: UsuarioService
   ) { }
 
@@ -46,15 +47,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
+
   attachSignin( element ) {
+    console.log ('attachSignin:', element);
     this.auth2.attachClickHandler( element, {}, googleUser => {
       // const profile = googleUser.getBasicProfile();
       // console.log(profile);
 
       const token = googleUser.getAuthResponse().id_token;
-      console.log(token);
+      this.usuarioService.loginGoogle( token )
+        // .subscribe ( res => this.ngZone.run(() => this.router.navigate(['/dashboard'])));
+        .subscribe ( () => window.location.href = '#/dashboard' );
     });
   }
+
 
   entrar( form: NgForm) {
 
