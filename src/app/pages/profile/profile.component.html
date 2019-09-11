@@ -1,0 +1,63 @@
+<div class="row animated fadeIn">
+
+    <!-- Tarjeta para la actualización de los datos del usuario -->
+    <div class="col-md-7 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfil del usuario</h4>
+                <h6 class="card-subtitle">nombre usuario</h6>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre de usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" placeholder="Introduzca el nombre de usuario" require>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Correo del usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [ngModel]="usuario.email" [disabled]="usuario.google" name="email" type="email" class="form-control" placeholder="Introduzca un correo" require>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Guardar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Tarjeta para la actualización de la fotografía -->
+    <div class="col-md-5 col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Fotografía del usuario</h4>
+                <h6 class="card-subtitle">nombre usuario</h6>
+
+                <form class="form p-t-20">
+                    <div class="form-group">
+                        <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150" alt="Foto esperada">                        
+                        <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150" alt="Foto esperada">                        
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFoto">Nueva Foto</label>
+                        <input (change)="seleccionImagen( $event.target.files[0] )" type="file" class="form-control" id="ejemploInputFile" aria-describedby="fileHelp">
+                    </div>
+
+                    <button (click)="cambiarImagen()" [disabled]="!imagenASubir" type="submit" class="btn btn-block btn-success waves-effect waves-light m-r-10">
+                            <i class="fa fa-save"></i>
+                            Actualizar foto
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+               
+
+</div>
