@@ -34,7 +34,6 @@ export class ImagenPipe implements PipeTransform {
       return url + '/usuarios/xxx';
     }
 
-    console.log(url);
     return url;
   }
 
