@@ -1,45 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario.model';
-import { UsuarioService } from 'src/app/services/service.index';
+import { Medico } from 'src/app/models/medico.model';
+import { MedicoService } from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
-import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
+  selector: 'app-medicos',
+  templateUrl: './medicos.component.html',
   styles: []
 })
-export class UsuariosComponent implements OnInit {
+export class MedicosComponent implements OnInit {
 
-  usuarios: Usuario[] = [];
+  medicos: Medico[] = [];
   desde: number = 0;
   totalRegistros: number = 0;
   cargando: boolean = true;
 
+
   constructor(
-    public usuariosService: UsuarioService,
-    public modalUploadService: ModalUploadService,
+    public medicoService: MedicoService,
   ) { }
 
   ngOnInit() {
-    this.cargarUsuarios();
-    this.modalUploadService.notificacion
-      .subscribe( resp => {
-        this.cargarUsuarios();
-    });
+    this.cargarMedicos();
   }
 
-  mostrarModal( id: string ) {
-    this.modalUploadService.mostrarModal( 'usuarios', id );
-  }
-
-  cargarUsuarios() {
+  cargarMedicos() {
     this.cargando = true;
 
-    this.usuariosService.cargarUsuarios( this.desde )
+    this.medicoService.cargarMedicos( this.desde )
       .subscribe( ( resp: any ) => {
-        this.totalRegistros = resp.total;
-        this.usuarios = resp.usuarios;
+        console.log( resp );
+        this.medicos = resp;
+        this.totalRegistros = this.medicoService.totalMedicos;
         this.cargando = false;
       });
   }
@@ -57,37 +49,27 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.desde += valor;
-    this.cargarUsuarios();
+    this.cargarMedicos();
 
   }
 
-  buscarUsuario( termino: string ) {
+  buscarMedico( termino: string ) {
     if ((!termino) || (termino.length < 3 )) {
-      this.cargarUsuarios();
+      this.cargarMedicos();
       return;
     }
 
     this.cargando = true;
 
-    this.usuariosService.buscarUsuarios( termino )
-    .subscribe( (usuarios: Usuario[] ) => {
-      this.usuarios = usuarios;
+    this.medicoService.buscarMedicos( termino )
+    .subscribe( (medicos: Medico[] ) => {
+      this.medicos = medicos;
       this.cargando = false;
     });
   }
 
-  borrarUsuario( usuario: Usuario ) {
-    console.log( usuario );
-    // Si no somos nosotros mismos (usuario autenticado )
-    if ( usuario._id === this.usuariosService.usuario._id) {
-      Swal.fire(
-        'No se puede borrar el usuario',
-        'No se puede eliminar el usuario actualmente autenticado',
-        'error'
-      );
-      return;
-    }
-
+  borrarMedico( medico: Medico ) {
+    console.log( medico );
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -98,7 +80,7 @@ export class UsuariosComponent implements OnInit {
 
     swalWithBootstrapButtons.fire({
       title: '¿Está seguro?',
-      text: `Está a punto de eliminar al usuario: ${usuario.nombre}. El borrado es irreversible`,
+      text: `Está a punto de eliminar el medico: ${medico.nombre}. El borrado es irreversible`,
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: '¡ Sí, elimínelo !',
@@ -106,20 +88,20 @@ export class UsuariosComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        this.usuariosService.borrarUsuario( usuario._id )
+        this.medicoService.borrarMedico( medico._id )
           .subscribe( resp => {
             console.log( resp );
             swalWithBootstrapButtons.fire(
               '¡Eliminado!',
-              `El usuario ${usuario.nombre} ha sido eliminado.`,
+              `El medico ${medico.nombre} ha sido eliminado.`,
               'success'
             );
-            this.cargarUsuarios();
+            this.cargarMedicos();
           }, (e => {
             console.log( e );
             swalWithBootstrapButtons.fire(
               '¡Error eliminado!',
-              `El usuario ${usuario.nombre} no ha podido ser eliminado.`,
+              `El medico ${medico.nombre} no ha podido ser eliminado.`,
               'error'
             );
           })
@@ -131,19 +113,19 @@ export class UsuariosComponent implements OnInit {
       ) {
         swalWithBootstrapButtons.fire(
           'Cancelada la eliminación',
-          `El usuario ${usuario.nombre} sigue estando en su sistema.`,
+          `El medico ${medico.nombre} sigue estando en su sistema.`,
           'error'
         );
       }
     });
   }
 
-  guardarUsuario( usuario: Usuario ) {
+  guardarMedico( medico: Medico ) {
 
-    // if ( usuario._id === this.usuariosService.usuario._id) {
+    // if ( medico._id === this.medicoService.medico._id) {
     //   Swal.fire(
-    //     'No se puede modificar la información del usuario',
-    //     'No se puede modificar la información del usuario actualmente autenticado',
+    //     'No se puede modificar la información del medico',
+    //     'No se puede modificar la información del medico actualmente autenticado',
     //     'error'
     //   );
     //   return;
@@ -159,7 +141,7 @@ export class UsuariosComponent implements OnInit {
 
     swalWithBootstrapButtons.fire({
       title: '¿Está seguro?',
-      text: `Está a punto de modificar la información del usuario: ${usuario.nombre}. El cambio es irreversible`,
+      text: `Está a punto de modificar la información del medico: ${medico.nombre}. El cambio es irreversible`,
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: '¡ Sí, modifíquelo !',
@@ -167,20 +149,20 @@ export class UsuariosComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        this.usuariosService.actualizarUsuario( usuario )
+        this.medicoService.actualizarMedico( medico )
           .subscribe( resp => {
             console.log( resp );
             swalWithBootstrapButtons.fire(
               '¡Modificado!',
-              `Se ha modificado la información del usuario ${usuario.nombre}.`,
+              `Se ha modificado la información del medico ${medico.nombre}.`,
               'success'
             );
-            this.cargarUsuarios();
+            this.cargarMedicos();
           }, (e => {
             console.log( e );
             swalWithBootstrapButtons.fire(
               '¡Error modificando!',
-              `La información del usuario ${usuario.nombre} no ha podido ser modificada.`,
+              `La información del medico ${medico.nombre} no ha podido ser modificada.`,
               'error'
             );
           })
@@ -192,12 +174,11 @@ export class UsuariosComponent implements OnInit {
       ) {
         swalWithBootstrapButtons.fire(
           'Cancelada la actualización',
-          `No se ha modificado la información del usuario ${usuario.nombre}.`,
+          `No se ha modificado la información del medico ${medico.nombre}.`,
           'error'
         );
       }
     });
   }
-
 
 }

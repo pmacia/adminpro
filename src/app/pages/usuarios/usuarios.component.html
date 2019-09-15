@@ -44,10 +44,12 @@
                                 <img (click)="mostrarModal( usuario._id )" [src]="usuario.img | imagen" class="img-50 img-circle pointer">
                             </td>
                             <td>
-                                {{ usuario.email }}
+                                <input [(ngModel)]="usuario.email" name="email" type="email" class="form-control" aria-describedby="">
+                                <!-- {{ usuario.email }} -->
                             </td>
                             <td>
-                                {{ usuario.nombre }}
+                                <input [(ngModel)]="usuario.nombre" name="nombre" type="text" class="form-control" aria-describedby="">
+                                <!-- {{ usuario.nombre }} -->
                             </td>
                             <td>
                                 <select [(ngModel)]="usuario.role" name="role" class="form-control">

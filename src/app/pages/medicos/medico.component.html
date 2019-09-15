@@ -1,0 +1,86 @@
+<div class="row animated fadeIn">
+
+        <!-- Tarjeta para la actualización de los datos del médico -->
+        <div class="col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Médico</h4>
+                    <h6 class="card-subtitle">  {{ medico.nombre }} </h6>
+    
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="guardarMedico( f )" class="form p-t-20">
+                        <div class="form-group">
+                            <label for="exampleInputuname">Nombre del médico</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input [(ngModel)]="medico.nombre" name="nombre" type="text" class="form-control" placeholder="Introduzca el nombre del médico" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Hospital del medico</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-email"></i></div>
+                                <select (change)="cambioHospital( $event.target.value )" [(ngModel)]="medico.hospital" name="hospital" class="form-control" required>
+                                        <option value="">
+                                            Seleccione hospital
+                                        </option>
+                                        <option *ngFor="let hospital of hospitales" [value]="hospital._id">
+                                            {{ hospital.nombre }}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                            <i class="fa fa-save"></i>
+                            Guardar
+                        </button>
+
+                        <a routerLink="/medicos" class="btn btn-inverse waves-effect waves-light m-r-10">
+                            <!-- <i class="fa fa-cancel"></i> -->
+                            Volver
+                        </a>
+    
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        
+        <!-- Tarjeta para la actualización de la fotografía -->
+        <div class="col-md-3 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Hospital</h4>
+    
+                    <form class="form p-t-20">
+                        <div class="form-group">
+                            <img [src]="hospital.img | imagen:'hospital'" class="rounde w150" >
+                            <!-- <img *ngIf="!imagenTemp" [src]="medico.img | imagen" class="w150" alt="Foto esperada">                         -->
+                            <!-- <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150" alt="Foto esperada">                         -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+                   
+    
+        <!-- Tarjeta para la actualización de la fotografía -->
+        <div class="col-md-3 col-lg-3" *ngIf="medico._id">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Médico</h4>
+        
+                        <form class="form p-t-20">
+                            <div class="form-group">
+                                <img (click)="cambiarFoto()" [src]="medico.img | imagen:'medico'" class="w150 img-circle pointer">
+                                <!-- <img *ngIf="!imagenTemp" [src]="medico.img | imagen" class="w150" alt="Foto esperada">                         -->
+                                <!-- <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150" alt="Foto esperada">                         -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                       
+        </div>
+    

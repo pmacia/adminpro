@@ -43,3 +43,7 @@ button {
 .oculto {
     display: none;
 }
+
+.boton-redondeado {
+    border-radius: 40px;
+}
