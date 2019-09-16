@@ -14,6 +14,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'observables', component: RxjsComponent, data: { titulo: 'Observables' } },
       { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' } },
       { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
+      { path: 'busqueda/:termino', component: BusquedaComponent, data: { titulo: 'Buscador' } },
 
       // Mantenimiento (solo administrador)
       { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de usuarios' } },
