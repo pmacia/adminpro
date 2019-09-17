@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
-import { map } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
+import { of } from 'rxjs/internal/observable/of';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import { throwError } from 'rxjs';
 
 
 @Injectable()
@@ -73,11 +75,29 @@ export class UsuarioService {
 
     const url = `${URL_SERVICIOS}/login`;
 
-    return this.http.post<any>( url, usuario)
-      .pipe( map( resp => {
-        this.guardarStorage( resp.id, resp.token, resp.usuario, resp.menu );
-        return true;
-      })
+    return this.http.post( url, usuario).pipe(
+        map( (resp: any) => {
+          this.guardarStorage( resp.id, resp.token, resp.usuario, resp.menu );
+          return true;
+        }),
+        catchError( err => {
+          console.error( err );
+          console.log('Manejamos el error del map y lo relanzamos');
+          return throwError( err.error );
+        }),
+        finalize (
+          () => {
+            console.log('first finalize() block executed');
+        }),
+        catchError( err => {
+          console.error( err.mensaje );
+          console.log('Manejamos el error relanzado proporcionando un valor de fallback');
+          return throwError( err );
+        }),
+        finalize (
+          () => {
+            console.log('second finalize() block executed');
+        }),
     );
   }
 
@@ -97,10 +117,15 @@ export class UsuarioService {
     const url = `${URL_SERVICIOS}/usuario`;
     console.log(url);
 
-    return this.http.post<any>( url, usuario)
-      .pipe( map( resp => {
-        Swal.fire('Usuario creado', usuario.email, 'success');
+    return this.http.post<any>( url, usuario).pipe(
+      map( (resp: any) => {
+        this.guardarStorage( resp.id, resp.token, resp.usuario, resp.menu );
         return resp.usuario;
+      }),
+      catchError( err => {
+        console.error( err.error.errors.message );
+        console.log('Manejamos el error del map y lo relanzamos al subscribe');
+        return throwError( err.error.errors.message );
       })
     );
   }
@@ -108,13 +133,17 @@ export class UsuarioService {
   actualizarUsuario( usuario: Usuario ) {
     const url = `${URL_SERVICIOS}/usuario/${usuario._id}?token=${this.token}`;
 
-    return this.http.put<any>( url, usuario )
-      .pipe( map( resp => {
+    return this.http.put<any>( url, usuario ).pipe(
+      map( (resp: any) => {
         if ( usuario._id === this.usuario._id ) {
           this.guardarStorage( resp.usuario._id, this.token, resp.usuario, resp.menu );
-          Swal.fire('Usuario actualizado', usuario.nombre, 'success');
         }
-        return true;
+        return usuario;
+      }),
+      catchError( err => {
+        console.error( err.error.errors.message );
+        console.log('Manejamos el error del map y lo relanzamos al subscribe');
+        return throwError( err.error.errors.message );
       })
     );
   }

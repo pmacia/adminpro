@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from '../services/service.index';
 import { Usuario } from '../models/usuario.model';
+import Swal from 'sweetalert2';
 
 declare function inicializarPlugins();
 declare const gapi: any;
@@ -70,9 +71,23 @@ export class LoginComponent implements OnInit {
 
     const usuario = new Usuario( null, form.value.email, form.value.password );
     this.usuarioService.login( usuario, form.value.recuerdame)
-      .subscribe( correcto => this.router.navigate(['/dashboard']));
+      .subscribe(
+        res => {
+          console.log( 'Parece que todo ha ido bien en el login subscribe.');
+          console.log( res );
+          this.router.navigate(['/dashboard']);
+        },
+        err => {
+          console.log( 'Hemos encontrado un error en el login subscribe.');
+          console.error( err );
+          Swal.fire('Importante', 'Los credenciales introducidos no son correctos', 'error');
+        },
+        () => {
+          console.log('Aquí siempre llegamos???');
+        }
+      );
 
-    console.log( form.valid);
-    console.log( form.value);
+    // console.log( form.valid );
+    // console.log( form.value );
   }
 }
