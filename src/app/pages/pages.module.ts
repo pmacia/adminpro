@@ -3,8 +3,6 @@ import { PagesRoutingModule } from './pages-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { PagesComponent } from './pages.component';
-
 import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 
@@ -22,7 +20,6 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
-import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
@@ -44,7 +41,6 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
         Graficas1Component
     ],
     declarations: [
-        PagesComponent,
         DashboardComponent,
         ProgressComponent,
         Graficas1Component,
@@ -56,7 +52,6 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
         ProfileComponent,
         UsuariosComponent,
         HospitalesComponent,
-        ModalUploadComponent,
         MedicosComponent,
         MedicoComponent,
         BusquedaComponent

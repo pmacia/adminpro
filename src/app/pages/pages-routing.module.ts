@@ -18,33 +18,26 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [ LoginGuard ],
-    children: [
-      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-      { path: 'progress', component: ProgressComponent, data: { titulo: 'Progreso' } },
-      { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
-      { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
-      { path: 'observables', component: RxjsComponent, data: { titulo: 'Observables' } },
-      { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' } },
-      { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
-      { path: 'busqueda/:termino', component: BusquedaComponent, data: { titulo: 'Buscador' } },
+  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+  { path: 'progress', component: ProgressComponent, data: { titulo: 'Progreso' } },
+  { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
+  { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
+  { path: 'observables', component: RxjsComponent, data: { titulo: 'Observables' } },
+  { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' } },
+  { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
+  { path: 'busqueda/:termino', component: BusquedaComponent, data: { titulo: 'Buscador' } },
 
-      // Mantenimiento (solo administrador)
-      {
-        path: 'usuarios',
-        component: UsuariosComponent,
-        canActivate: [ AdminGuard ],
-        data: { titulo: 'Mantenimiento de usuarios' }
-      },
-      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de hospitales' } },
-      { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de médicos' } },
-      { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar médico' } },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
-    ]
+  // Mantenimiento (solo administrador)
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
+    canActivate: [ AdminGuard ],
+    data: { titulo: 'Mantenimiento de usuarios' }
   },
+  { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de hospitales' } },
+  { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de médicos' } },
+  { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar médico' } },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

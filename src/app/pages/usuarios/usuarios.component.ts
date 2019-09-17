@@ -169,18 +169,16 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         this.usuariosService.actualizarUsuario( usuario )
           .subscribe( resp => {
-            console.log( resp );
             swalWithBootstrapButtons.fire(
               '¡Modificado!',
               `Se ha modificado la información del usuario ${usuario.nombre}.`,
               'success'
             );
             this.cargarUsuarios();
-          }, (e => {
-            console.log( e );
+          }, (err => {
             swalWithBootstrapButtons.fire(
-              '¡Error modificando!',
-              `La información del usuario ${usuario.nombre} no ha podido ser modificada.`,
+              `¡Error modificando usuario ${usuario.nombre}!`,
+              err,
               'error'
             );
           })
